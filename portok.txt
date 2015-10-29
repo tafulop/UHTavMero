@@ -1,0 +1,10 @@
+led 0: timer 0 start
+led 1: timer 0 stop
+
+
+Trigger: PD0, kimenet
+Echo: PD1, bemenet
+
+
+GND 14
+VCC 13
