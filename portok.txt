@@ -1,5 +1,11 @@
-led 0: timer 0 start
-led 1: timer 0 stop
+led 1: timer 0 start
+led 2: timer 0 stop
+led 3: timer 2 start
+led 4: timer 2 stop
+led 5: timer 2 interrupt
+led 6: calc distance ran
+
+led 0xFF: echo response captured
 
 
 Trigger: PD0, kimenet
