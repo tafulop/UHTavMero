@@ -14,3 +14,19 @@ Echo: PD1, bemenet
 
 GND 14
 VCC 13
+
+
+
+Timer icatch
+
+
+140
+15
+----
+130
+
+
+128
+128
+---
+255

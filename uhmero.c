@@ -16,24 +16,32 @@ void ext_int_init();
 void calc_distance();
 int *getCnt();
 
+
+void timer1_input_capture_init();
+
 void set_uh_ports();
 
 void measure_echo();
 void measure_echo_stop();
 unsigned int blabla = 0;
 
+unsigned int i1 =0;
+unsigned int i2 =0;
+
 int main (void){
 
 	
 
 	init_periph();
+	
+	timer1_input_capture_init();
 
 	
-	impulse_start();
+	//impulse_start();
 	
 
 	while(1){
-		if(PING == 1){impulse_start();}
+		
 	}	
 
 	return;
@@ -42,18 +50,24 @@ int main (void){
 
 ISR(TIMER2_COMP_vect)
 {	
-	blabla = blabla + 20;
+/*	if(blabla < 65000){
+		blabla = blabla + 10;
+	} else {
+		lcd_put_string("Out of range.");
+	}
+	*/
+	blabla++;
 }
 
 
 void init_periph(){
 
-	lcd_init();
-	pushbutton_init();
+//	lcd_init();
+	//pushbutton_init();
 	led_init();
 	set_uh_ports();
 
-	timer0_init();
+	//timer0_init();
 	timer2_init();
 	ext_int_init();
 	
@@ -83,7 +97,7 @@ void ext_int_init(){
 void impulse_start(){
 	TCNT0 = 0;	// timer számláló regiszter nullázás
 	TCCR0 |= 1;	// timer 0 indítás
-	PORTD |= 1; // trigger impulse 1
+//	PORTD |= 1; // trigger impulse 1
 	led_out(1);
 }
 
@@ -99,33 +113,36 @@ ISR(TIMER0_COMP_vect)
 void impulse_stop(){
 	//TCCR0 &= 0b11111110;
 	TIMSK &= 0b11111101;	// timer 0 CTC interrupt disable
-	PORTD &= 0xFE;	// trigger impulse 0
+//	PORTD &= 0xFE;	// trigger impulse 0
 	//led_out(16);
 }
 
 void measure_echo(){
 	
-	TCCR2 |= 3;	// timer 2 indítás
-	led_out(3);
+	TCCR2 |= 2;	// timer 2 indítás
+	//led_out(3);
 	
 }
 
 
 ISR(INT1_vect){
 	
-	static int run = 1;
+	static unsigned int run = 1;
 	EIFR = 0;
+
 
 	if(run%2){
 		measure_echo();	
 		select_falling_edge();
+		led_out(run++);
 	}else{
 		timer2_stop();
 		select_falling_edge();
+		led_out(run++);
 		calc_distance();	
 	}
 
-	run++;	
+	
 }
 
 void select_rising_edge(){
@@ -162,21 +179,59 @@ void calc_distance(){
 
 void timer2_init(){
 	
-	OCR2 = 4;
+	OCR2 = 49;
 	TCCR2 |= (1<<3); // CTC mode 
 	TIMSK |= (1<<7);	// interrupt
 }
 
 void timer2_stop(){
-	TIMSK &= ~(1<<7);	// interrupt
 	//TIMSK = 0;
-	led_out(4);
+	TCCR2 = 0;
+	//led_out(4);
 }
 
 
 void print_result(){
 	
 	lcd_goto_yx(0,0);
-	lcd_put_int(blabla/58);
+	lcd_put_int(blabla);
 
 }
+
+void timer1_input_capture_init(){
+	ETIMSK |= 1<<5;	// input capture interrupt enable
+	TCCR3B |= (1<<7)|(1<<6)|1;	// noise filter + rising edge
+}
+
+ISR(TIMER3_CAPT_vect){
+	
+	static char i = 1;
+	
+
+	if(i%2){
+		i1 = ICR3;
+		TCCR3B &= ~(1<<6);	// falling edge
+		i++;
+		led_out(i1);	
+	}else{
+		TCCR3B |= 1<<6;		// rising edge
+		i2 = ICR3;
+		i = 1;
+		led_out(i2-i1);	
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
