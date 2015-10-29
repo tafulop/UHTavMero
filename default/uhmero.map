@@ -117,7 +117,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x75e
+.text           0x00000000      0x74c
  *(.vectors)
  .vectors       0x00000000       0x8c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51/crtm128.o
                 0x00000000                __vectors
@@ -179,6 +179,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
                 0x000000ca                __vector_32
                 0x000000ca                __vector_34
                 0x000000ca                __vector_24
+                0x000000ca                __vector_12
                 0x000000ca                __bad_interrupt
                 0x000000ca                __vector_6
                 0x000000ca                __vector_31
@@ -204,57 +205,54 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
                 0x000000ca                __vector_16
                 0x000000ca                __vector_18
                 0x000000ca                __vector_20
- .text          0x000000ce      0x664 uhmero.o
+ .text          0x000000ce      0x652 uhmero.o
                 0x000003d0                lcd_put_string
                 0x00000208                lcd_put_bin
                 0x00000530                init_periph
                 0x0000013e                lcd_put_data
-                0x0000066c                timer2_init
+                0x00000644                timer2_init
                 0x00000136                lcd_clr
                 0x000004b2                pushbutton_init
                 0x00000258                lcd_put_int
                 0x000000ce                lcd_clock
-                0x00000630                __vector_12
-                0x0000058c                ext_int_init
-                0x00000570                timer1_init
+                0x0000057c                ext_int_init
                 0x000002fe                lcd_put_freq
-                0x00000650                select_falling_edge
-                0x00000586                set_uh_ports
-                0x0000059e                impulse_start
-                0x00000644                select_rising_edge
-                0x00000622                measure_echo
+                0x00000630                select_falling_edge
+                0x00000576                set_uh_ports
+                0x0000058e                impulse_start
+                0x00000624                select_rising_edge
+                0x00000616                measure_echo
                 0x00000184                lcd_init
-                0x000005ac                main
-                0x0000065e                getCnt
+                0x000005a0                main
+                0x0000063e                getCnt
                 0x0000051c                timer0_init
-                0x00000678                timer2_stop
+                0x00000656                timer2_stop
                 0x000004ee                __vector_9
-                0x0000069c                calc_distance
-                0x000006a2                __vector_2
+                0x00000684                calc_distance
+                0x0000068a                __vector_2
                 0x00000438                CreateCGram
-                0x000005be                __vector_15
+                0x000005b2                __vector_15
                 0x000004be                led_init
                 0x000003a2                lcd_goto_yx
-                0x00000618                impulse_stop
+                0x0000060c                impulse_stop
                 0x000004cc                led_out
-                0x00000664                timer1_stop
                 0x000000f0                lcd_cmd
                 0x0000041e                lcd_clr_line
-                0x0000067c                print_result
- .text          0x00000732        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_udivmodhi4.o)
- .text          0x00000732        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
- .text          0x00000732        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_clear_bss.o)
-                0x00000732                . = ALIGN (0x2)
+                0x00000664                print_result
+ .text          0x00000720        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_udivmodhi4.o)
+ .text          0x00000720        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
+ .text          0x00000720        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_clear_bss.o)
+                0x00000720                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x00000732       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_udivmodhi4.o)
-                0x00000732                __udivmodhi4
- .text.libgcc   0x0000075a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
- .text.libgcc   0x0000075a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_clear_bss.o)
-                0x0000075a                . = ALIGN (0x2)
+ .text.libgcc   0x00000720       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_udivmodhi4.o)
+                0x00000720                __udivmodhi4
+ .text.libgcc   0x00000748        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
+ .text.libgcc   0x00000748        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_clear_bss.o)
+                0x00000748                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000075a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
-                0x0000075a                exit
-                0x0000075a                _exit
+ .fini9         0x00000748        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
+                0x00000748                exit
+                0x00000748                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -273,11 +271,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000075a        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000748        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000075e                _etext = .
+                0x0000074c                _etext = .
 
-.data           0x00800100        0x2 load address 0x0000075e
+.data           0x00800100        0x2 load address 0x0000074c
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51/crtm128.o
@@ -305,8 +303,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00800106                PROVIDE (__bss_end, .)
-                0x0000075e                __data_load_start = LOADADDR (.data)
-                0x00000760                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000074c                __data_load_start = LOADADDR (.data)
+                0x0000074e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800106        0x0
                 0x00800106                PROVIDE (__noinit_start, .)
@@ -370,32 +368,32 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
                 0x00000000       0x20 uhmero.o
 
 .debug_pubnames
-                0x00000000      0x25d
+                0x00000000      0x22d
  *(.debug_pubnames)
  .debug_pubnames
-                0x00000000      0x25d uhmero.o
+                0x00000000      0x22d uhmero.o
 
-.debug_info     0x00000000      0x6fc
+.debug_info     0x00000000      0x6d7
  *(.debug_info)
- .debug_info    0x00000000      0x6fc uhmero.o
+ .debug_info    0x00000000      0x6d7 uhmero.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x1de
+.debug_abbrev   0x00000000      0x1fe
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x1de uhmero.o
+ .debug_abbrev  0x00000000      0x1fe uhmero.o
 
-.debug_line     0x00000000      0x89e
+.debug_line     0x00000000      0x87e
  *(.debug_line)
- .debug_line    0x00000000      0x89e uhmero.o
+ .debug_line    0x00000000      0x87e uhmero.o
 
-.debug_frame    0x00000000      0x250
+.debug_frame    0x00000000      0x220
  *(.debug_frame)
- .debug_frame   0x00000000      0x250 uhmero.o
+ .debug_frame   0x00000000      0x220 uhmero.o
 
-.debug_str      0x00000000      0x28a
+.debug_str      0x00000000      0x266
  *(.debug_str)
- .debug_str     0x00000000      0x28a uhmero.o
-                                0x2c8 (size before relaxing)
+ .debug_str     0x00000000      0x266 uhmero.o
+                                0x2a4 (size before relaxing)
 
 .debug_loc      0x00000000      0x1b9
  *(.debug_loc)
