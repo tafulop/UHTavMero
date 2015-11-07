@@ -3,6 +3,7 @@
 #include "segment_driver.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "asm.h"
 
 // pefifériák inicializálása
 void init_periph(); 
@@ -18,11 +19,13 @@ void send_trigger();
 void calc_distance();
 
 
+
 int main (void){
 
-	
+
 	init_periph();
 	
+
 	while(1){
 		if(PING == 1){
 			send_trigger();
@@ -35,8 +38,8 @@ int main (void){
 void init_periph(){
 
 	pushbutton_init();	// mérés starthoz
-	led_init();		// debug infóhoz
-	
+	//led_init();		// debug infóhoz
+	asmLEDInit();
 	set_uh_ports();	// Echo és Trigger beállítása
 	segment_init();	// 7 szegmens init
 	timer0_init();	

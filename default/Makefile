@@ -37,7 +37,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = uhmero.o led_driver.o segment_driver.o pushbutton_driver.o 
+OBJECTS = uhmero.o led_driver.o segment_driver.o pushbutton_driver.o asm.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -57,6 +57,9 @@ segment_driver.o: ../segment_driver.c
 
 pushbutton_driver.o: ../pushbutton_driver.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+asm.o: ../asm.s
+	$(CC) $(INCLUDES) $(ASMFLAGS) -c  $<
 
 ##Link
 $(TARGET): $(OBJECTS)
