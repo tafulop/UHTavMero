@@ -13,6 +13,8 @@ void impulse_stop();
 void timer2_init();
 void timer2_stop();
 
+void send_trigger();
+
 void ext_int_init();
 void calc_distance();
 int *getCnt();
@@ -43,7 +45,10 @@ int main (void){
 	
 
 	while(1){
-		
+		if(PING == 1){
+			send_trigger();
+			while(PING != 0){}
+		}	
 	}	
 
 	return;
@@ -69,7 +74,7 @@ void init_periph(){
 	led_init();
 	set_uh_ports();
 	segment_init();
-	//timer0_init();
+	timer0_init();
 	timer2_init();
 	ext_int_init();
 	
@@ -79,9 +84,8 @@ void init_periph(){
 
 void timer0_init(){
 	
-	OCR0 = 159;
-	TCCR0 = 0;
-	TCCR0 |= (1<<3); // CTC mode 
+	OCR0 = 159;	// 10 usec széles trigger jelhez
+	TCCR0 |= (1<<3); // CTC mode hogy pontos legyen a trigger
 	TIMSK |= (1<<1);	// interrupt enable
 }
 
@@ -96,18 +100,19 @@ void ext_int_init(){
 }
 
 
-void impulse_start(){
+
+void send_trigger(){
 	TCNT0 = 0;	// timer számláló regiszter nullázás
 	TCCR0 |= 1;	// timer 0 indítás
-//	PORTD |= 1; // trigger impulse 1
-	led_out(1);
+	PORTD |= 1;
+	led_out(0);
 }
-
 
 ISR(TIMER0_COMP_vect)
 {	
-	impulse_stop();	// 10 usec impulzus vége
+	PORTD &= 0b11111110;	// 10 usec impulzus vége, PORTD D0 ->0
 	led_out(2);
+	TCCR3B |= 3;	// elindítjuk a Timer 3-at, ami méri az impulzus szélességét
 	//measure_echo();	// mérés indítás
 		
 }
@@ -182,7 +187,7 @@ void calc_distance(){
 void timer2_init(){
 	
 	
-	TCCR2 |= 1; 
+	TCCR2 |= 3; 
 	TIMSK |= (1<<6);	// interrupt
 }
 
@@ -201,8 +206,9 @@ void print_result(){
 }
 
 void timer1_input_capture_init(){
+	TCNT3 = 0;
 	ETIMSK |= 1<<5;	// input capture interrupt enable
-	TCCR3B |= (1<<7)|(1<<6)|1;	// noise filter + rising edge
+	TCCR3B |= (1<<7)|(1<<6);	// noise filter + rising edge + 64 prescale
 }
 
 ISR(TIMER3_CAPT_vect){
@@ -210,20 +216,32 @@ ISR(TIMER3_CAPT_vect){
 	static char i = 1;
 	unsigned int res = 0;
 
+	// ebbe fut bele elõször, mert 1/2 maradéka 1
 	if(i%2){
 		i1 = ICR3;
 		TCCR3B &= ~(1<<6);	// falling edge
 		i++;
-		led_out(i1);	
+		led_out(i1);
+	// ebbe másodszor, mert 2/2 maradéka 0		
 	}else{
 		TCCR3B |= 1<<6;		// rising edge
 		i2 = ICR3;
 		i = 1;
 		res = i2-i1;
 		led_out(res);	
-
-		segment_put_int(res / 58);
+		//res = res / 58;
+		float test = res / 14.5;
+		segment_put_int((int)test);
 	}
+
+	// ha egy mérés meg volt, akkor leállítjuk a timert 
+	if(i > 2)
+	{
+		TCCR3B &= 0b11111000; // clock source off
+		TCNT3 = 0;
+		i = 1;	// i beállítása következõ méréshez.
+	}
+
 }
 
 
