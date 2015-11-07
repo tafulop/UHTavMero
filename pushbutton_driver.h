@@ -6,10 +6,5 @@
 
 void pushbutton_init();
 
-void pushbutton_init()
-{
-	DDRG |= 0x1F;
-}
-
 
 #endif

@@ -1,4 +1,4 @@
-uhmero.o: ../uhmero.c ../pushbutton_driver.h \
+pushbutton_driver.o: ../pushbutton_driver.c ../pushbutton_driver.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/sfr_defs.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/inttypes.h \
@@ -8,9 +8,7 @@ uhmero.o: ../uhmero.c ../pushbutton_driver.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/common.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h ../led_driver.h \
-  ../segment_driver.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h
+  c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h
 
 ../pushbutton_driver.h:
 
@@ -33,9 +31,3 @@ c:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
-
-../led_driver.h:
-
-../segment_driver.h:
-
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:

@@ -37,7 +37,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = uhmero.o 
+OBJECTS = uhmero.o led_driver.o segment_driver.o pushbutton_driver.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -47,6 +47,15 @@ all: $(TARGET) uhmero.hex uhmero.eep uhmero.lss size
 
 ## Compile
 uhmero.o: ../uhmero.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+led_driver.o: ../led_driver.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+segment_driver.o: ../segment_driver.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+pushbutton_driver.o: ../pushbutton_driver.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
