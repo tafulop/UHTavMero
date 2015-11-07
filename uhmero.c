@@ -1,6 +1,7 @@
 #include "lcd_driver.h"
 #include "pushbutton_driver.h"
 #include "led_driver.h"
+#include "segment_driver.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -39,6 +40,7 @@ int main (void){
 	
 	//impulse_start();
 	
+	
 
 	while(1){
 		
@@ -66,7 +68,7 @@ void init_periph(){
 	//pushbutton_init();
 	led_init();
 	set_uh_ports();
-
+	segment_init();
 	//timer0_init();
 	timer2_init();
 	ext_int_init();
@@ -179,9 +181,9 @@ void calc_distance(){
 
 void timer2_init(){
 	
-	OCR2 = 49;
-	TCCR2 |= (1<<3); // CTC mode 
-	TIMSK |= (1<<7);	// interrupt
+	
+	TCCR2 |= 1; 
+	TIMSK |= (1<<6);	// interrupt
 }
 
 void timer2_stop(){
@@ -206,7 +208,7 @@ void timer1_input_capture_init(){
 ISR(TIMER3_CAPT_vect){
 	
 	static char i = 1;
-	
+	unsigned int res = 0;
 
 	if(i%2){
 		i1 = ICR3;
@@ -217,11 +219,17 @@ ISR(TIMER3_CAPT_vect){
 		TCCR3B |= 1<<6;		// rising edge
 		i2 = ICR3;
 		i = 1;
-		led_out(i2-i1);	
+		res = i2-i1;
+		led_out(res);	
+
+		segment_put_int(res / 58);
 	}
 }
 
 
+ISR(TIMER2_OVF_vect){
+	segment_display();
+}
 
 
 

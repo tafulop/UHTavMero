@@ -11,7 +11,7 @@ uhmero.o: ../uhmero.c ../lcd_driver.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
-  ../pushbutton_driver.h ../led_driver.h \
+  ../pushbutton_driver.h ../led_driver.h ../segment_driver.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h
 
 ../lcd_driver.h:
@@ -43,5 +43,7 @@ c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
 ../pushbutton_driver.h:
 
 ../led_driver.h:
+
+../segment_driver.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
