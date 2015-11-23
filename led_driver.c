@@ -1,10 +1,5 @@
 #include "led_driver.h"
 
-void led_init()
-{
-	DDRB |= 0xF0;	// PORTB out
-	DDRD |= 0xF0;	// PORTD out
-}
 
 void led_out(unsigned char data)
 {

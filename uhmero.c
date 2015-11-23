@@ -7,17 +7,11 @@
 
 // pefifériák inicializálása
 void init_periph(); 
-
-void timer0_init();	// 10usec széles impulzus generálásához
-void timer2_init();	// 7seg meghajtásához
 void timer3_input_capture_init();	// impulzus szélességének méréséhez
-
-void set_uh_ports();	// Trigger és echo lábak beállítása	
 
 // Mérés függvényei
 void send_trigger();
 void calc_distance();
-
 
 
 int main (void){
@@ -25,7 +19,7 @@ int main (void){
 
 	init_periph();
 	
-
+	// gombra indul a mérés
 	while(1){
 		if(PING == 1){
 			send_trigger();
@@ -37,37 +31,24 @@ int main (void){
 
 void init_periph(){
 
-	pushbutton_init();	// mérés starthoz
-	//led_init();		// debug infóhoz
+	
+	asmPushButtonInit();	// mérés starthoz
+	
 	asmLEDInit();
-	set_uh_ports();	// Echo és Trigger beállítása
-	segment_init();	// 7 szegmens init
-	timer0_init();	
-	timer2_init();
+
+	asmSetUHPorts();	// Echo és Trigger beállítása
+	
+	asmSegmentInit();	// 7 szegmens init
+	
+	asmTimer0Init();	// trigger jelhez 10usec impulzus
+	asmTimer2Init();	// 7 seg drive
+
 	timer3_input_capture_init();
 	
 	sei(); // global interrupt enable
 
 }
 
-void set_uh_ports(){
-	DDRD |= 1;	// trigger kimenet
-	DDRD &= 0b11111101;	// echo bemenet
-}
-
-void timer0_init(){
-	
-	OCR0 = 159;	// 10 usec széles trigger jelhez
-	TCCR0 |= (1<<3); // CTC mode hogy pontos legyen a trigger
-	TIMSK |= (1<<1);	// interrupt enable
-}
-
-// Timer a 7seg meghajtásához
-void timer2_init(){
-	
-	TCCR2 |= 3; 
-	TIMSK |= (1<<6);	// interrupt
-}
 
 // impulzus szélességének mérése
 void timer3_input_capture_init(){

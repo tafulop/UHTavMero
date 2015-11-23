@@ -4,15 +4,9 @@
 volatile unsigned char segment_data[4] = {0};
 
 
-void segment_init()
-{
-	DDRA |= 0xFF;
-}
-
-
 void segment_display()
 {
-static unsigned char iterator,data_address;
+static unsigned char iterator = 0, data_address = 3;
 
 PORTA = 0;	// en | _ _ _ | data
 PORTA |= 0x80|(iterator++<<4)|segment_data[data_address--]; 
