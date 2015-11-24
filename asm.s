@@ -66,6 +66,8 @@ asmTimer2Init:
    	ori	r16, 0x40	
 	out	TIMSK, r16
 
+	ret
+
 
 // Összes gomb bemenet
 .global asmPushButtonInit

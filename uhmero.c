@@ -11,7 +11,7 @@ void timer3_input_capture_init();	// impulzus szélességének méréséhez
 
 // Mérés függvényei
 void send_trigger();
-void calc_distance();
+
 
 
 int main (void){
@@ -54,7 +54,7 @@ void init_periph(){
 void timer3_input_capture_init(){
 	TCNT3 = 0;
 	ETIMSK |= 1<<5;	// input capture interrupt enable
-	TCCR3B |= (1<<7)|(1<<6);	// noise filter + rising edge + 64 prescale
+	TCCR3B |= (1<<7)|(1<<6);	// noise filter + rising edge
 }
 
 // trigger küldése, leállítani a timer 0 fogja
@@ -97,34 +97,9 @@ ISR(TIMER3_CAPT_vect){
 		segment_put_int((int)res/14.5);
 	}
 
-	// ha egy mérés meg volt, akkor leállítjuk a timert 
-	if(i > 2)
-	{
-		TCCR3B &= 0b11111000; // clock source off
-		TCNT3 = 0;		// timert számláló regiszter nullázása
-		i = 1;	// i beállítása következõ méréshez.
-	}
-
 }
-
-// beállítja a Timer 3 Input Capture módját Rising Edge-re
-void select_rising_edge(){
-	EICRA |= (1<<2)|(1<<3);
-}
-
-// beállítja a Timer 3 Input Capture módját Rising Edge-re
-void select_falling_edge(){
-	EICRA = 0;
-	EICRA |= (1<<3);
-}
-
 
 // 7seg meghajtása
 ISR(TIMER2_OVF_vect){
 	segment_display();
 } 
-
-
-
-
-
