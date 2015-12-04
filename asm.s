@@ -1,33 +1,14 @@
 // Definitions from m128def.inc
 
-#define DDRD 	0x11
-#define DDRB 	0x17
-
-#define PORTD 	0x12
-#define PORTB 	0x18
-
-#define TCCR0 	0x33
-#define OCR0	0x31
-
-#define TIMSK	0x37
-
-#define TCCR2	0x25
-#define TCNT2	0x24
-#define OCR2	0x23
-
-#define DDRG	0x64
-#define DDRA	0x1a
-#define DDRD	0x11
-
-
+#include <avr/io.h>
 
 // LED init asm function
 .global asmLEDInit
 asmLEDInit:
-	
-	in	r24, DDRD
+
+	in	r24, _SFR_IO_ADDR(DDRD)
 	ori	r24, 0xF0	
-	out	DDRD, r24	; felsõ 4 bit
+	out	_SFR_IO_ADDR(DDRD), r24	; felsõ 4 bit
 
 	in	r24, DDRB	
 	ori	r24, 0xF0	
@@ -40,16 +21,16 @@ asmLEDInit:
 .global asmTimer0Init
 asmTimer0Init:
 	ldi	r16, 0x9F
-	out	OCR0, r16
+	out	_SFR_IO_ADDR(OCR0), r16
 	
 
-	in	r16, TCCR0 	; r24 beolvas, hogy megtartsuk az értékét
+	in	r16, _SFR_IO_ADDR(TCCR0) 	; r24 beolvas, hogy megtartsuk az értékét
 	ori	r16, 0x08	; 0x08 || r24
-	out	TCCR0, r16
+	out	_SFR_IO_ADDR(TCCR0), r16
 	
-	in	r16, TIMSK	; interruptot engedélyezzük úgy, hogy minden más marad a régi	
+	in	r16, _SFR_IO_ADDR(TIMSK)	; interruptot engedélyezzük úgy, hogy minden más marad a régi	
 	ori	r16, 0x02	; 
-	out	TIMSK, r16	; 
+	out	_SFR_IO_ADDR(TIMSK), r16	; 
 	
 	ret
 
@@ -58,13 +39,13 @@ asmTimer0Init:
 .global asmTimer2Init
 asmTimer2Init:
 
-	in	r16, TCCR2	
+	in	r16, _SFR_IO_ADDR(TCCR2)	
 	ori	r16, 0x03	
- 	out	TCCR2, r16	
+ 	out	_SFR_IO_ADDR(TCCR2), r16	
 	
-	in	r16, TIMSK	; interrupt engedélyezés
+	in	r16, _SFR_IO_ADDR(TIMSK)	; interrupt engedélyezés
    	ori	r16, 0x40	
-	out	TIMSK, r16
+	out	_SFR_IO_ADDR(TIMSK), r16
 
 	ret
 
@@ -73,9 +54,9 @@ asmTimer2Init:
 .global asmPushButtonInit
 asmPushButtonInit:
 
-	ldi r16, DDRG
+	ldi r16, _SFR_IO_ADDR(DDRG)
 	ori r16, 0x1F
-	sts DDRG, r16
+	sts _SFR_IO_ADDR(DDRG), r16
 
 	ret
 
@@ -84,7 +65,7 @@ asmPushButtonInit:
 asmSegmentInit:
 
 	ldi	r24, 0xFF	; 255
-	out	DDRA, r24	; 26
+	out	_SFR_IO_ADDR(DDRA), r24	; 26
 
 	ret
 
@@ -92,9 +73,9 @@ asmSegmentInit:
 .global asmSetUHPorts
 asmSetUHPorts:
 
-	sbi	DDRD, 0	; TRIGGER kimenet
+	sbi	_SFR_IO_ADDR(DDRD), 0	; TRIGGER kimenet
 
-	cbi	DDRD, 1	; ECHO bemenet
+	cbi	_SFR_IO_ADDR(DDRD), 1	; ECHO bemenet
 
 	ret
 
